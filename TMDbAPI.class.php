@@ -355,6 +355,93 @@ class TMDbAPI extends TMDb {
     return ($parse) ? $this->parse($response) : $response;
   }
   
+  /**
+   * Calls API's Person.getInfo method.
+   *
+   * @param $pid
+   *   The ID of the TMDb person to get info for.
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *   Full filmography, known movies, images and things
+   *   like birthplace for a specific person in the TMDb.
+   *
+   * @see http://api.themoviedb.org/2.1/methods/Person.getInfo
+   */
+  public function getPersonInfo($pid, $format = NULL, $language = NULL, $parse = TRUE) {
+    $response = $this->call('Person.getInfo', $pid, $format, $language);
+    return ($parse) ? $this->parse($response) : $response;
+  }
+  
+  /**
+   * Calls API's Person.getLatest method.
+   *
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *    The ID of the last person created in the TMDb.
+   *
+   * @see http://api.themoviedb.org/2.1/methods/Person.getLatest
+   */
+  public function getLatestPerson($format = NULL, $language = NULL, $parse = TRUE) {
+    $response = $this->call('Person.getLatest', NULL, $format, $language);
+    return ($parse) ? $this->parse($response) : $response;
+  }
+  
+  /**
+   * Calls API's Person.getVersion method.
+   *
+   * @param $pids
+   *   A comma separated TMDb IDs of the persons to lookup for.
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *    Last modified time along with the current version number.
+   *
+   * @see http://api.themoviedb.org/2.1/methods/Person.getVersion
+   */
+  public function getPersonVersion($pids, $format = NULL, $language = NULL, $parse = TRUE) {
+    $response = $this->call('Person.getVersion', $pids, $format, $language);
+    return ($parse) ? $this->parse($response) : $response;
+  }
+  
+  /**
+   * Calls API's Person.search method.
+   *
+   * @param $name
+   *   The name of the person to search for.
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *    A list of resulted persons.
+   *
+   * @see http://api.themoviedb.org/2.1/methods/Person.search
+   */
+  public function searchPerson($name, $format = NULL, $language = NULL, $parse = TRUE) {
+    $response = $this->call('Person.search', $name, $format, $language);
+    return ($parse) ? $this->parse($response) : $response;
+  }
+  
 
 }
 
