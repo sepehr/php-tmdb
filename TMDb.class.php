@@ -61,6 +61,17 @@ class TMDb {
   
   /**
    * Class constructor.
+   *
+   * @param $key
+   *   API key.
+   * @param $server
+   *   API server address.
+   * @param $version
+   *   API version.
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
    */
   public function __construct($key, $server = TMDb::SERVER, $version = TMDb::VERSION, $format = TMDb::JSON, $language = TMDb::LANG) {
     $this->setKey($key);
