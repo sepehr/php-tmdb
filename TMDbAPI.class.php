@@ -136,6 +136,29 @@ class TMDbAPI extends TMDb {
     return ($parse) ? $this->parse($response) : $response;
   }
   
+  /**
+   * Calls API's Movie.addRating method.
+   *
+   * @param $hash
+   *   The computed hash of the file you are doing a lookup for.
+   * @param $bytesize
+   *   The bytesize of the file you are doing a lookup for.
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *   Status code.
+   * @see http://api.themoviedb.org/2.1/methods/Movie.addRating
+   */
+  public function addMovieRating($params, $format = NULL, $language = NULL, $parse = TRUE) {
+    $response = $this->call('Movie.addRating', $params, $format, $language, TMDb::POST);
+    return ($parse) ? $this->parse($response) : $response;
+  }
+  
 
 }
 
