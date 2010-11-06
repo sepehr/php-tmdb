@@ -28,35 +28,135 @@
 
 /**
  * TMDb API base class.
+ *
  * Provides basic functionality to interact with http://api.themoviedb.org/2.1/.
  */
 class TMDb {
-  // TODO: Add properties docs.
-  
-  // API call default params.
+
+  /**
+   * @var Denotes XML format.
+   *
+   * @ingroup Constants
+   */
   const XML = 'xml';
+  
+  /**
+   * @var Denotes JSON format.
+   *
+   * @ingroup Constants
+   */
   const JSON = 'json';
+  
+  /**
+   * @var Denotes YAML format.
+   *
+   * @ingroup Constants
+   */
   const YAML = 'yaml';
+  
+  /**
+   * @var Denotes default API response language.
+   *
+   * @ingroup Constants
+   */
   const LANG = 'en';
+  
+  /**
+   * @var Denotes default API version.
+   *
+   * @ingroup Constants
+   */
   const VERSION = 2.1;
+  
+  /**
+   * @var Denotes default server address.
+   *
+   * @ingroup Constants
+   */
   const SERVER = 'http://api.themoviedb.org/';
   
-  // API call HTTP methods.
+  /**
+   * @var Denotes HTTP GET.
+   *
+   * @ingroup Constants
+   */
   const GET = 'get';
+  
+  /**
+   * @var Denotes HTTP POST.
+   *
+   * @ingroup Constants
+   */
   const POST = 'post';
   
-  // API method types.
+  /**
+   * @var Denotes Auth type API methods.
+   *
+   * @ingroup Constants
+   */
   const AUTH = 'Auth';
+  
+  /**
+   * @var Denotes Media type API methods.
+   *
+   * @ingroup Constants
+   */
   const MEDIA = 'Media';
+  
+  /**
+   * @var Denotes Movie type API methods.
+   *
+   * @ingroup Constants
+   */
   const MOVIE = 'Movie';
+  
+  /**
+   * @var Denotes Person type API methods.
+   *
+   * @ingroup Constants
+   */
   const PERSON = 'Person';
+  
+  /**
+   * @var Denotes Genres type API methods.
+   *
+   * @ingroup Constants
+   */
   const GENRES = 'Generes';
   
-  // Props.
+  /**
+   * @var TMDb API key.
+   *
+   * ingroup Properties.
+   */
   protected $key;
+  
+  /**
+   * @var Default API response format.
+   *
+   * ingroup Properties.
+   */
   protected $format;
+  
+  /**
+   * @var API server address.
+   *
+   * ingroup Properties.
+   */
   protected $server;
+  
+  /**
+   * @var Preferred API version.
+   *
+   * ingroup Properties.
+   */
   protected $version;
+  
+  /**
+   * @var Default API response languagethroe.
+   *
+   * ingroup Properties.
+   */
   protected $language;
   
   /**
@@ -82,7 +182,7 @@ class TMDb {
   }
   
   /**
-   * Set API key.
+   * Sets API key.
    *
    * @param
    *   $key New API key to be set.
@@ -92,7 +192,7 @@ class TMDb {
   }
   
   /**
-   * Set API server address.
+   * Sets API server address.
    *
    * @param
    *   $key New API server to be set.
@@ -102,7 +202,7 @@ class TMDb {
   }
   
   /**
-   * Set API version.
+   * Sets API version.
    *
    * @param
    *   $version New API version to be set.
@@ -112,7 +212,7 @@ class TMDb {
   }
   
   /**
-   * Set API response format.
+   * Sets API response format.
    *
    * @param
    *   $format New API response format to be set.
@@ -122,7 +222,7 @@ class TMDb {
   }
   
   /**
-   * Set API response language.
+   * Sets API response language.
    *
    * @param
    *   $language New API response language to be set.
@@ -132,7 +232,7 @@ class TMDb {
   }
   
   /**
-   * Get API key.
+   * Gets API key.
    *
    * @return
    *   $key New API key to be set.
@@ -142,7 +242,7 @@ class TMDb {
   }
   
   /**
-   * Get API server address.
+   * Gets API server address.
    *
    * @return
    *   $key New API server to be set.
@@ -152,7 +252,7 @@ class TMDb {
   }
   
   /**
-   * Get API version.
+   * Gets API version.
    *
    * @return
    *   $version New API version to be set.
@@ -162,7 +262,7 @@ class TMDb {
   }
   
   /**
-   * Get API response format.
+   * Gets API response format.
    *
    * @return
    *   $format New API response format to be set.
@@ -172,7 +272,7 @@ class TMDb {
   }
   
   /**
-   * Get API response language.
+   * Gets API response language.
    *
    * @return
    *   $language New API response language to be set.
@@ -207,7 +307,7 @@ class TMDb {
   protected function getMethodType($method) {
     return substr($method, 0, strpos($method, '.'));
   }
-
+  
   /**
    * Builds API call GET URL for a specific method.
    *
@@ -242,7 +342,7 @@ class TMDb {
     }
     return $call_url;
   }
-
+  
   /**
    * Fetches a remote file using either cURL functions or file_get_contents().
    *
@@ -293,6 +393,8 @@ class TMDb {
    * @param $language
    *   Specific API response language for $method call.
 	 *
+	 * @throws TMDbException.
+	 *
 	 * @return
 	 *   API response in $format.
 	 */
@@ -334,6 +436,8 @@ class TMDb {
    *
    * @param $yaml_response
    *   YAML formatted response to be parsed.
+   *
+   * @throws TMDbException.
    *
    * @return
    *   Parsed YAML response.
@@ -389,3 +493,4 @@ class TMDb {
     return $parsed;
   }
 }
+
