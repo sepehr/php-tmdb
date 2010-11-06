@@ -195,8 +195,18 @@ class TMDb {
   
   /**
    * Extracts and returns an API method's type.
+   *
+   * @param
+   *   $method The name of the API method.
+   *
+   * @return
+   *   The API method's type.
+   *
+   * @see http://api.themoviedb.org/2.1/
    */
-  protected function getMethodType() {
-
+  protected function getMethodType($method) {
+    return substr($method, 0, strpos($method, '.'));
   }
+  
+  
 }
