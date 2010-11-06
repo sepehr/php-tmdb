@@ -496,3 +496,10 @@ class TMDb {
   }
 }
 
+/**
+ * TMDb exception class.
+ *
+ * Defining to regard Drupal coding standards.
+ */
+class TMDbException extends Exception{}
+
