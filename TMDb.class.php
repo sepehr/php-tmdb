@@ -242,6 +242,41 @@ class TMDb {
     }
     return $call_url;
   }
+
+  /**
+   * Fetches a remote file using either cURL functions or file_get_contents().
+   *
+   * @param $url
+   *   File URL to be fetched.
+   * @param $http_method
+   *   API call HTTP method.
+   * @param $post_params
+   *   Parameters to be sent if the $http_method is POST.
+   * @param $use_curl
+   *   To use cURL or not.
+   *
+   * @return
+   *   Fetched file contents.
+   */
+  protected function fetch($url, $http_method = TMDb::GET, $post_params = NULL, $use_curl = TRUE) {
+    if (!extension_loaded('curl') || !$use_curl) {
+      return file_get_contents($url);
+    }
+    
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HEADER, FALSE);
+    curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+    if ($http_method == TMDb::POST) {
+      curl_setopt($curl, CURLOPT_POST, TRUE);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $post_params);
+    }
+    
+    $response = curl_exec($curl);
+    curl_close($curl);
+    return (string) $response;
+  }
   
   /**
 	 * Call a TMDb API method.
