@@ -62,8 +62,12 @@ class TMDb {
   /**
    * Class constructor.
    */
-  public function __construct() {
-    
+  public function __construct($key, $server = TMDb::SERVER, $version = TMDb::VERSION, $format = TMDb::JSON, $language = TMDb::LANG) {
+    $this->setKey($key);
+    $this->setServer($server);
+    $this->setVersion($version);
+    $this->setFormat($format);
+    $this->setLanguage($language);
   }
   
   /**
