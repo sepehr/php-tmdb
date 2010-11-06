@@ -11,7 +11,9 @@
  * @see http://api.themoviedb.org/2.1/
  *
  * @license GNU General Public License 3.0
- *
+ */
+ 
+/**
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
