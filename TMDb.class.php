@@ -174,7 +174,7 @@ class TMDb {
    * Builds API call URL for lazies to cheer!
    */
   protected function getBaseUrl() {
-
+    $server = $this->getServer() . '/' . $this->getVersion();
   }
   
   /**
