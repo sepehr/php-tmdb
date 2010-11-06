@@ -33,7 +33,7 @@
  *
  * Provides basic functionality to interact with http://api.themoviedb.org/2.1/.
  */
-class TMDb {
+class TMDbBase {
 
   /**
    * @var Denotes XML format.
@@ -175,7 +175,7 @@ class TMDb {
    * @param $language
    *   API call response language.
    */
-  public function __construct($key, $server = TMDb::SERVER, $version = TMDb::VERSION, $format = TMDb::JSON, $language = TMDb::LANG) {
+  public function __construct($key, $server = TMDbBase::SERVER, $version = TMDbBase::VERSION, $format = TMDbBase::JSON, $language = TMDbBase::LANG) {
     $this->setKey($key);
     $this->setServer($server);
     $this->setVersion($version);
@@ -360,7 +360,7 @@ class TMDb {
    * @return
    *   Fetched file contents.
    */
-  protected function fetch($url, $http_method = TMDb::GET, $post_params = NULL, $use_curl = TRUE) {
+  protected function fetch($url, $http_method = TMDbBase::GET, $post_params = NULL, $use_curl = TRUE) {
     if (!extension_loaded('curl') || !$use_curl) {
       return file_get_contents($url);
     }
@@ -370,7 +370,7 @@ class TMDb {
     curl_setopt($curl, CURLOPT_HEADER, FALSE);
     curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-    if ($http_method == TMDb::POST) {
+    if ($http_method == TMDbBase::POST) {
       curl_setopt($curl, CURLOPT_POST, TRUE);
       curl_setopt($curl, CURLOPT_POSTFIELDS, $post_params);
     }
@@ -382,6 +382,8 @@ class TMDb {
   
   /**
 	 * Call a TMDb API method.
+	 *
+	 * Making this public for curious geeks!
 	 *
 	 * @param $method
 	 *   API method name to be included in the API Call URL.
@@ -400,32 +402,32 @@ class TMDb {
 	 * @return
 	 *   API response in $format.
 	 */
-  public function call($method, $params = NULL, $format = NULL, $language = NULL, $http_method = TMDb::GET) {
+  public function call($method, $params = NULL, $format = NULL, $language = NULL, $http_method = TMDbBase::GET) {
     $call_url = $response = NULL;
     $format = (is_null($format)) ? $this->getFormat() : $format;
     $language = (is_null($language)) ? $this->getLanguage() : $language;
     
     switch (strtolower($http_method)) {
-      case TMDb::GET:
+      case TMDbBase::GET:
         // Check parameters.
         if (!is_null($params)) {
           $params = (is_array($params)) ? '?' . http_build_query($params) : urlencode($params);
         }
         
         // Check language and set the API call URL.
-        $language = ($this->getMethodType($method) == TMDb::AUTH) ? NULL : $this->getLanguage();
+        $language = ($this->getMethodType($method) == TMDbBase::AUTH) ? NULL : $this->getLanguage();
         $call_url = $this->buildCallUrl($method, $params, $format, $language);
         $response = $this->fetch($call_url);
         break;
         
-      case TMDb::POST:
+      case TMDbBase::POST:
         if (!is_array($params)) {
           throw new TMDbException('The $params parameter passed to call() method should be an array when using HTTP POST method.');
         }
         $params['type'] = $format;
         $params['api_key'] = $this->getKey();
         $call_url = $this->getBaseUrl() . $method;  
-        $response = $this->fetch($call_url, TMDb::POST, $params);
+        $response = $this->fetch($call_url, TMDbBase::POST, $params);
         break;
     }
     
@@ -479,15 +481,15 @@ class TMDb {
     $format = (is_null($format)) ? $this->getFormat() : $format;
     
     switch (strtolower($format)) {
-      case TMDb::JSON:
+      case TMDbBase::JSON:
         $parsed = json_decode($response, TRUE);
         break;
         
-      case TMDb::XML:
+      case TMDbBase::XML:
         $parsed =  simplexml_load_string($response);
         break;
         
-      case TMDb::YAML:
+      case TMDbBase::YAML:
         $parsed = $this->parseYaml($response);
         break;
     }

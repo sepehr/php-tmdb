@@ -30,13 +30,13 @@
  */
 
 /**
- * TMDb API class.
+ * TMDb Movie API class.
  *
- * Provides higher level interaction with http://api.themoviedb.org/2.1/.
+ * Provides higher level interaction for "Movie" type API methods.
  *
  * @see TMDb class.
  */
-class TMDbAPI extends TMDb {
+class TMDbMovie extends TMDb {
   
   /**
    * TMDb constructor who cries and calls his parent!
@@ -52,88 +52,8 @@ class TMDbAPI extends TMDb {
    * @param $language
    *   API call response language.
    */
-  public function __construct($key, $server = TMDb::SERVER, $version = TMDb::VERSION, $format = TMDb::JSON, $language = TMDb::LANG) {
+  public function __construct($key, $server = TMDbBase::SERVER, $version = TMDbBase::VERSION, $format = TMDbBase::JSON, $language = TMDbBase::LANG) {
     parent::__construct($key, $server, $version, $format, $language);
-  }
-  
-  /**
-   * Calls API's Auth.getToken method.
-   *
-   * @param $format
-   *   API call response format.
-   * @param $parse
-   *   To parse response or not.
-   *
-   * @return
-   *   Authentication token.
-   * @see http://api.themoviedb.org/2.1/methods/Auth.getToken
-   */
-  public function getAuthToken($format = NULL, $parse = TRUE) {
-    $response = $this->call('Auth.getToken', NULL, $format);
-    return ($parse) ? $this->parse($response, $format) : $response;
-  }
-  
-  /**
-   * Calls API's Auth.getSession method.
-   *
-   * @param $token
-   *   Authentication token.
-   * @param $format
-   *   API call response format.
-   * @param $parse
-   *   To parse response or not.
-   *
-   * @return
-   *   Authentication session.
-   * @see http://api.themoviedb.org/2.1/methods/Auth.getSession
-   */
-  public function getAuthSession($token, $format = NULL, $parse = TRUE) {
-    $response = $this->call('Auth.getSession', $token, $format);
-    return ($parse) ? $this->parse($response) : $response;
-  }
-  
-  /**
-   * Calls API's Media.addID method.
-   *
-   * @param $params
-   *   Associative array to be used in POST API call.
-   * @param $format
-   *   API call response format.
-   * @param $language
-   *   API call response language.
-   * @param $parse
-   *   To parse response or not.
-   *
-   * @return
-   *   Status code.
-   * @see http://api.themoviedb.org/2.1/methods/Media.addID
-   */
-  public function addMediaId($params, $format = NULL, $language = NULL, $parse = TRUE) {
-    $response = $this->call('Media.addID', $params, $format, $language, TMDb::POST);
-    return ($parse) ? $this->parse($response) : $response;
-  }
-  
-  /**
-   * Calls API's Media.getInfo method.
-   *
-   * @param $hash
-   *   The computed hash of the file you are doing a lookup for.
-   * @param $bytesize
-   *   The bytesize of the file you are doing a lookup for.
-   * @param $format
-   *   API call response format.
-   * @param $language
-   *   API call response language.
-   * @param $parse
-   *   To parse response or not.
-   *
-   * @return
-   *   Media info.
-   * @see http://api.themoviedb.org/2.1/methods/Media.getInfo
-   */
-  public function getMediaInfo($hash, $bytesize, $format = NULL, $language = NULL, $parse = TRUE) {
-    $response = $this->call('Media.getInfo', $hash . '/' . $bytesize, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
   }
   
   /**
@@ -155,7 +75,7 @@ class TMDbAPI extends TMDb {
    * @see http://api.themoviedb.org/2.1/methods/Movie.addRating
    */
   public function addMovieRating($params, $format = NULL, $language = NULL, $parse = TRUE) {
-    $response = $this->call('Movie.addRating', $params, $format, $language, TMDb::POST);
+    $response = $this->call('Movie.addRating', $params, $format, $language, TMDbBase::POST);
     return ($parse) ? $this->parse($response) : $response;
   }
   
@@ -352,113 +272,6 @@ class TMDbAPI extends TMDb {
    */
   public function searchMovie($title, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Movie.search', $title, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
-  }
-  
-  /**
-   * Calls API's Person.getInfo method.
-   *
-   * @param $pid
-   *   The ID of the TMDb person to get info for.
-   * @param $format
-   *   API call response format.
-   * @param $language
-   *   API call response language.
-   * @param $parse
-   *   To parse response or not.
-   *
-   * @return
-   *   Full filmography, known movies, images and things
-   *   like birthplace for a specific person in the TMDb.
-   *
-   * @see http://api.themoviedb.org/2.1/methods/Person.getInfo
-   */
-  public function getPersonInfo($pid, $format = NULL, $language = NULL, $parse = TRUE) {
-    $response = $this->call('Person.getInfo', $pid, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
-  }
-  
-  /**
-   * Calls API's Person.getLatest method.
-   *
-   * @param $format
-   *   API call response format.
-   * @param $language
-   *   API call response language.
-   * @param $parse
-   *   To parse response or not.
-   *
-   * @return
-   *    The ID of the last person created in the TMDb.
-   *
-   * @see http://api.themoviedb.org/2.1/methods/Person.getLatest
-   */
-  public function getLatestPerson($format = NULL, $language = NULL, $parse = TRUE) {
-    $response = $this->call('Person.getLatest', NULL, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
-  }
-  
-  /**
-   * Calls API's Person.getVersion method.
-   *
-   * @param $pids
-   *   A comma separated TMDb IDs of the persons to lookup for.
-   * @param $format
-   *   API call response format.
-   * @param $language
-   *   API call response language.
-   * @param $parse
-   *   To parse response or not.
-   *
-   * @return
-   *    Last modified time along with the current version number.
-   *
-   * @see http://api.themoviedb.org/2.1/methods/Person.getVersion
-   */
-  public function getPersonVersion($pids, $format = NULL, $language = NULL, $parse = TRUE) {
-    $response = $this->call('Person.getVersion', $pids, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
-  }
-  
-  /**
-   * Calls API's Person.search method.
-   *
-   * @param $name
-   *   The name of the person to search for.
-   * @param $format
-   *   API call response format.
-   * @param $language
-   *   API call response language.
-   * @param $parse
-   *   To parse response or not.
-   *
-   * @return
-   *    A list of resulted persons.
-   *
-   * @see http://api.themoviedb.org/2.1/methods/Person.search
-   */
-  public function searchPerson($name, $format = NULL, $language = NULL, $parse = TRUE) {
-    $response = $this->call('Person.search', $name, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
-  }
-  
-  /**
-   * Calls API's Genres.getList method.
-   *
-   * @param $format
-   *   API call response format.
-   * @param $language
-   *   API call response language.
-   * @param $parse
-   *   To parse response or not.
-   *
-   * @return
-   *    A list of valid genres within TMDb.
-   *
-   * @see http://api.themoviedb.org/2.1/methods/Genres.getList
-   */
-  public function getGenresList($format = NULL, $language = NULL, $parse = TRUE) {
-    $response = $this->call('Genres.getList', NULL, $format, $language);
     return ($parse) ? $this->parse($response) : $response;
   }
 }
