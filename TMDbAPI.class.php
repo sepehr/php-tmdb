@@ -34,7 +34,7 @@
  *
  * Provides higher level interaction with http://api.themoviedb.org/2.1/.
  */
-class TMDbAPI {
+class TMDbAPI extends TMDb {
   
   /**
    * TMDb constructor who cries and calls his parent!
