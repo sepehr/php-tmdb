@@ -73,6 +73,25 @@ class TMDbAPI extends TMDb {
     return ($parse) ? $this->parse($response, $format) : $response;
   }
   
+  /**
+   * Calls API's Auth.getSession method.
+   *
+   * @param $token
+   *   Authentication token.
+   * @param $format
+   *   API call response format.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *   Authentication session.
+   * @see http://api.themoviedb.org/2.1/methods/Auth.getSession
+   */
+  public function getAuthSession($token, $format = NULL, $parse = TRUE) {
+    $response = $this->call('Auth.getSession', $token, $format);
+    return ($parse) ? $this->parse($response) : $response;
+  }
+  
 
 }
 
