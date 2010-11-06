@@ -31,6 +31,28 @@
  * Provides basic functionality to interact with http://api.themoviedb.org/2.1/.
  */
 class TMDb {
+  // TODO: Add properties docs.
+  
+  // API call default params.
+  const XML = 'xml';
+  const JSON = 'json';
+  const YAML = 'yaml';
+  const LANG = 'en';
+  const VERSION = 2.1;
+  const SERVER = 'http://api.themoviedb.org/';
+  
+  // API call HTTP methods.
+  const GET = 'get';
+  const POST = 'post';
+  
+  // API method types.
+  const AUTH = 'Auth';
+  const MEDIA = 'Media';
+  const MOVIE = 'Movie';
+  const PERSON = 'Person';
+  const GENRES = 'Generes';
+  
+  // Props.
   protected $key;
   protected $format;
   protected $server;
