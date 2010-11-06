@@ -33,6 +33,8 @@
  * TMDb API class.
  *
  * Provides higher level interaction with http://api.themoviedb.org/2.1/.
+ *
+ * @see TMDb class.
  */
 class TMDbAPI extends TMDb {
   
@@ -54,6 +56,23 @@ class TMDbAPI extends TMDb {
     parent::__construct($key, $server, $version, $format, $language);
   }
   
+  /**
+   * Calls API's Auth.getToken method.
+   *
+   * @param $format
+   *   API call response format.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *   Authentication token.
+   * @see http://api.themoviedb.org/2.1/methods/Auth.getToken
+   */
+  public function getAuthToken($format = NULL, $parse = TRUE) {
+    $response = $this->call('Auth.getToken', NULL, $format);
+    return ($parse) ? $this->parse($response, $format) : $response;
+  }
   
+
 }
 
