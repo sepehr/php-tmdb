@@ -326,12 +326,15 @@ class TMDbBase {
    */
   protected function buildCallUrl($method, $params, $format, $language) {
     $parts = array($method);
-    if (!is_null($language))
+    
+    if (!is_null($language)) {
       $parts[] = $language;
+    }
+    
     $parts[] = $format;
     $parts[] = $this->getKey();
-    
     $call_url = $this->getBaseUrl() . implode('/', $parts);
+    
     if (!is_null($params)) {
       switch ($params[0]) {
         case '?':
@@ -342,6 +345,7 @@ class TMDbBase {
           $call_url .= '/' . $params;
       }
     }
+    
     return $call_url;
   }
   
