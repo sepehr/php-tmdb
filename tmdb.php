@@ -310,7 +310,55 @@ class TMDb {
     return (string) $response;
   }
 
+  /**
+   * Call a TMDb API method.
+   *
+   * @param $method
+   *   API method name to be included in the API Call URL.
+   * @param $params
+   *   Parameters to be included in the API Call URL. Either an array or a string.
+   * @param $format
+   *   Specific API response format for $method call.
+   * @param $http_method
+   *   The HTTP method to be used for the call.
+   *   If set to POST, the $params parameter "should" be an array.
+   * @param $language
+   *   Specific API response language for $method call.
+   *
+   * @return
+   *   API response in $format.
+   */
+  public function call($method, $params = NULL, $format = NULL, $language = NULL, $http_method = TMDb::GET) {
+    $call_url = $response = NULL;
+    $format = (is_null($format)) ? $this->getFormat() : $format;
+    $language = (is_null($language)) ? $this->getLanguage() : $language;
 
+    switch (strtolower($http_method)) {
+      case TMDb::GET:
+        // Check parameters.
+        if (!is_null($params)) {
+          $params = (is_array($params)) ? '?' . http_build_query($params) : urlencode($params);
+        }
+
+        // Check language and set the API call URL.
+        $language = ($this->getMethodType($method) == TMDb::AUTH) ? NULL : $this->getLanguage();
+        $call_url = $this->buildCallUrl($method, $params, $format, $language);
+        $response = $this->fetch($call_url);
+        break;
+
+      case TMDb::POST:
+        if (!is_array($params)) {
+          throw new TMDbException('The $params parameter passed to call() method should be an array when using HTTP POST method.');
+        }
+        $params['type'] = $format;
+        $params['api_key'] = $this->getKey();
+        $call_url = $this->getBaseUrl() . $method;
+        $response = $this->fetch($call_url, TMDb::POST, $params);
+        break;
+    }
+
+    return $response;
+  }
 }
 
 /**
