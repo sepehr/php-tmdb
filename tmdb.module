@@ -71,11 +71,11 @@ function tmdb($key = FALSE, $server = FALSE, $version = FALSE, $format = FALSE, 
     return FALSE;
   }
 
-  $key      = $key ? variable_get('tmdb_api_key', '') : $key;
-  $format   = $format ? variable_get('tmdb_api_format', 'json') : $format;
-  $server   = $server ? variable_get('tmdb_api_server', 'http://api.themoviedb.org/') : $server;
-  $version  = $version ? variable_get('tmdb_api_version', '2.1') : $version;
-  $language = $language ? variable_get('tmdb_api_language', 'en') : $language;
+  $key      = $key ? $key : variable_get('tmdb_api_key', '');
+  $format   = $format ? $format : variable_get('tmdb_api_format', 'json');
+  $server   = $server ? $server : variable_get('tmdb_api_server', 'http://api.themoviedb.org/');
+  $version  = $version ? $version : variable_get('tmdb_api_version', '2.1');
+  $language = $language ? $language: variable_get('tmdb_api_language', 'en');
 
   // Load TMDbPHP library:
   module_load_include('api.inc', 'tmdb', 'tmdb');
