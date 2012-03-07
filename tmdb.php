@@ -110,6 +110,107 @@ class TMDb {
     $this->setLanguage($language);
   }
 
+  /**
+   * Setter for API key.
+   *
+   * @param $key
+   *   New API key to be set.
+   */
+  public function setKey($key) {
+    $this->key = $key;
+  }
+
+  /**
+   * Setter for API server endpoint.
+   *
+   * @param $server
+   *   New API server to be set.
+   */
+  public function setServer($server) {
+    $this->server = $server;
+  }
+
+  /**
+   * Setter for API version.
+   *
+   * @param $version
+   *   New API version to be set.
+   */
+  public function setVersion($version) {
+    $this->version = $version;
+  }
+
+  /**
+   * Setter for API response format.
+   *
+   * @param $format
+   *   New API response format to be set.
+   */
+  public function setFormat($format) {
+    $this->format = $format;
+  }
+
+  /**
+   * Setter for API response language.
+   *
+   * @param $language
+   *   New API response language to be set.
+   */
+  public function setLanguage($language) {
+    $this->language = $language;
+  }
+
+  /**
+   * Getter for API key.
+   *
+   * @return
+   *   Current API key.
+   */
+  public function getKey() {
+    return $this->key;
+  }
+
+  /**
+   * Getter for API server address.
+   *
+   * @return
+   *   Current API server endpoint.
+   */
+  public function getServer() {
+    return $this->server;
+  }
+
+  /**
+   * Getter for API version.
+   *
+   * @return
+   *   Current API version to be set.
+   */
+  public function getVersion() {
+    return $this->version;
+  }
+
+  /**
+   * Getter for API response format.
+   *
+   * @return
+   *   Current API response format.
+   */
+  public function getFormat() {
+    return $this->format;
+  }
+
+  /**
+   * Getter for API response language.
+   *
+   * @return
+   *   Current API response language.
+   */
+  public function getLanguage() {
+    return $this->language;
+  }
+
+
 }
 
 /**
