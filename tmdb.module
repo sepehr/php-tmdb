@@ -37,7 +37,7 @@ function tmdb_menu() {
   // API test page:
   $items['admin/settings/tmdb/test'] = array(
     'title'            => 'API Test',
-    'page callback'    => 'drupal_get_form'
+    'page callback'    => 'drupal_get_form',
     'page arguments'   => array('tmdb_admin_api_testing'),
     'access arguments' => array('administer TMDb configuration'),
     'type'             => MENU_LOCAL_TASK,
