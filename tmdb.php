@@ -210,6 +210,21 @@ class TMDb {
     return $this->language;
   }
 
+  /**
+   * Builds API call URL while taking care of trailing slashes.
+   *
+   * @return
+   *   API call URI.
+   */
+  protected function getBaseUrl() {
+    $server = $this->getServer();
+    if (substr(trim($server), -1) != '/') {
+      $server .= '/';
+    }
+
+    return $server . $this->getVersion() . '/';
+  }
+
 
 }
 
