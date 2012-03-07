@@ -68,4 +68,15 @@ function tmdb_admin_api_settings() {
  * Page callback: TMDb admin API testing page.
  */
 function tmdb_admin_api_testing() {
+  // Check if the API key is set:
+  if (variable_get('tmdb_api_key', FALSE)) {
+    // TODO: Test API
+    return 'API KEY SET, TEST API!';
+  }
+  // API key is not set:
+  else {
+    return t('To test the API you need to set your API key at !settings first.', array(
+      '!settings' => l(t('settings page'), 'admin/settings/tmdb'),
+    ));
+  }
 }
