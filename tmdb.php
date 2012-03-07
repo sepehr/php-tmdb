@@ -225,6 +225,91 @@ class TMDb {
     return $server . $this->getVersion() . '/';
   }
 
+  /**
+   * Extracts and returns an API method's type.
+   *
+   * @param
+   *   $method The name of the API method.
+   *
+   * @return
+   *   The API method's type.
+   *
+   * @see http://api.themoviedb.org/2.1/
+   */
+  protected function getMethodType($method) {
+    return substr($method, 0, strpos($method, '.'));
+  }
+
+  /**
+   * Builds API call GET URL for a specific method.
+   *
+   * @param $method
+   *   API call method name.
+   * @param $params
+   *   API method parameteres to be passed.
+   *
+   * @return
+   *   Built API call URL.
+   *
+   * @see buildBaseUrl()
+   * @see http://api.themoviedb.org/2.1/
+   */
+  protected function buildCallUrl($method, $params, $format, $language) {
+    $parts = array($method);
+    if (!is_null($language))
+      $parts[] = $language;
+    $parts[] = $format;
+    $parts[] = $this->getKey();
+
+    $call_url = $this->getBaseUrl() . implode('/', $parts);
+    if (!is_null($params)) {
+      switch ($params[0]) {
+        case '?':
+          $call_url .= $params;
+          break;
+
+        default:
+          $call_url .= '/' . $params;
+      }
+    }
+    return $call_url;
+  }
+
+  /**
+   * Fetches a remote file using either cURL functions or file_get_contents().
+   *
+   * @param $url
+   *   File URL to be fetched.
+   * @param $http_method
+   *   API call HTTP method.
+   * @param $post_params
+   *   Parameters to be sent if the $http_method is POST.
+   * @param $use_curl
+   *   To use cURL or not.
+   *
+   * @return
+   *   Fetched file contents.
+   */
+  protected function fetch($url, $http_method = TMDb::GET, $post_params = NULL, $use_curl = TRUE) {
+    if (!extension_loaded('curl') || !$use_curl) {
+      return file_get_contents($url);
+    }
+
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HEADER, FALSE);
+    curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+    if ($http_method == TMDb::POST) {
+      curl_setopt($curl, CURLOPT_POST, TRUE);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $post_params);
+    }
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+    return (string) $response;
+  }
+
 
 }
 
