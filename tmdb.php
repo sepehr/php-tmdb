@@ -59,7 +59,12 @@
  * </code>
  *
  * @see http://api.themoviedb.org
- * @todo Review the code, it's for about a year ago, blah bla.
+ * @todo
+ *   - Review the code, it's for about a year ago, blah bla.
+ *   - TMDb's "Auth.getToken" and "Auth.getSession" has been
+ *     eventually deprecated. We need to drop these methods and
+ *     implement the v3 authentication process documented at:
+ *     http://help.themoviedb.org/kb/api/user-authentication
  */
 class TMDbCore {
   // API call default params:
@@ -499,6 +504,9 @@ class TMDbAPI extends TMDbCore {
    *   Authentication token.
    *
    * @see http://api.themoviedb.org/2.1/methods/Auth.getToken
+   * @see http://help.themoviedb.org/kb/api/user-authentication
+   *
+   * @todo DROP.
    */
   public function authGetToken($format = NULL, $parse = TRUE) {
     $response = $this->call('Auth.getToken', NULL, $format);
@@ -519,6 +527,9 @@ class TMDbAPI extends TMDbCore {
    *   Authentication session
    *
    * @see http://api.themoviedb.org/2.1/methods/Auth.getSession
+   * @see http://help.themoviedb.org/kb/api/user-authentication
+   *
+   * @todo DROP.
    */
   public function authGetSession($token, $format = NULL, $parse = TRUE) {
     $response = $this->call('Auth.getSession', $token, $format);
