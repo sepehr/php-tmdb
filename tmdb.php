@@ -360,7 +360,72 @@ class TMDb {
 
     return $response;
   }
-}
+
+  /**
+   * Parses a YAML formatted $response.
+   * Checks for availability of PHP YAML parsers.
+   *
+   * @param $yaml_response
+   *   YAML formatted response to be parsed.
+   *
+   * @throws TMDbException
+   *
+   * @return
+   *   Parsed YAML response.
+   */
+  protected function parseYaml($yaml_response) {
+    if (function_exists('yaml_parse')) {
+      return yaml_parse($yaml_response);
+    }
+
+    if (function_exists('syck_load')) {
+      return syck_load($yaml_response);
+    }
+
+    if (class_exists('Spyc')) {
+      return Spyc::YAMLLoad($yaml_response);
+    }
+
+    throw new TMDbException('Could not found a PHP YAML parser.');
+  }
+
+  /**
+   * Parses API call response.
+   *
+   * @param $response
+   *   API call response.
+   * @param $format
+   *   API call response format.
+   *
+   * @returns
+   *   An associative array objects decoded from $response.
+   */
+  protected function parse($response, $format = NULL) {
+    if (empty($response) || is_null($response) || !$response) {
+      return NULL;
+    }
+
+    $format = (is_null($format)) ? $this->getFormat() : $format;
+
+    switch (strtolower($format)) {
+      case TMDb::JSON:
+        $parsed = json_decode($response, TRUE);
+        break;
+
+      case TMDb::XML:
+        $parsed =  simplexml_load_string($response);
+        break;
+
+      case TMDb::YAML:
+        $parsed = $this->parseYaml($response);
+        break;
+    }
+
+    return $parsed;
+  }
+} // TMDb class.
+
+
 
 /**
  * The Exception class for TMDb specific exceptions.
