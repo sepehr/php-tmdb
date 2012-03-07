@@ -494,6 +494,52 @@ class TMDbAPI extends TMDb {
     return ($parse) ? $this->parse($response) : $response;
   }
 
+  /**
+   * Calls API's Media.addID method.
+   *
+   * @param $params
+   *   Associative array to be used in POST API call.
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *   Status code.
+   *
+   * @see http://api.themoviedb.org/2.1/methods/Media.addID
+   */
+  public function addMediaId($params, $format = NULL, $language = NULL, $parse = TRUE) {
+    $response = $this->call('Media.addID', $params, $format, $language, TMDb::POST);
+    return ($parse) ? $this->parse($response) : $response;
+  }
+
+  /**
+   * Calls API's Media.getInfo method.
+   *
+   * @param $hash
+   *   The computed hash of the file you are doing a lookup for.
+   * @param $bytesize
+   *   The bytesize of the file you are doing a lookup for.
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *   Media info.
+   *
+   * @see http://api.themoviedb.org/2.1/methods/Media.getInfo
+   */
+  public function getMediaInfo($hash, $bytesize, $format = NULL, $language = NULL, $parse = TRUE) {
+    $response = $this->call('Media.getInfo', $hash . '/' . $bytesize, $format, $language);
+    return ($parse) ? $this->parse($response) : $response;
+  }
+
 } // TMDbAPI class.
 
 /**
