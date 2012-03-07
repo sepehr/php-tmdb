@@ -846,6 +846,25 @@ class TMDbAPI extends TMDb {
     return ($parse) ? $this->parse($response) : $response;
   }
 
+  /**
+   * Calls API's Genres.getList method.
+   *
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *    A list of valid genres within TMDb.
+   *
+   * @see http://api.themoviedb.org/2.1/methods/Genres.getList
+   */
+  public function getGenresList($format = NULL, $language = NULL, $parse = TRUE) {
+    $response = $this->call('Genres.getList', NULL, $format, $language);
+    return ($parse) ? $this->parse($response) : $response;
+  }
 
 } // TMDbAPI class.
 
