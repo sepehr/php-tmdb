@@ -477,7 +477,7 @@ class TMDbAPI extends TMDbCore {
    * @param $language
    *   API call response language.
    */
-  public function __construct($key, $server = TMDbCore::SERVER, $version = TMDbCore::VERSION, $format = TMDbCore::JSON, $language = TMDbCore::LANG) {
+  public function __construct($key, $server, $version, $format, $language) {
     parent::__construct($key, $server, $version, $format, $language);
   }
 
