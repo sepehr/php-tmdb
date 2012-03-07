@@ -397,7 +397,7 @@ class TMDb {
    * @param $format
    *   API call response format.
    *
-   * @returns
+   * @return
    *   An associative array objects decoded from $response.
    */
   protected function parse($response, $format = NULL) {
@@ -456,6 +456,43 @@ class TMDbAPI extends TMDb {
     parent::__construct($key, $server, $version, $format, $language);
   }
 
+  /**
+   * Calls API's Auth.getToken method.
+   *
+   * @param $format
+   *   API call response format.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *   Authentication token.
+   *
+   * @see http://api.themoviedb.org/2.1/methods/Auth.getToken
+   */
+  public function getAuthToken($format = NULL, $parse = TRUE) {
+    $response = $this->call('Auth.getToken', NULL, $format);
+    return ($parse) ? $this->parse($response, $format) : $response;
+  }
+
+  /**
+   * Calls API's Auth.getSession method.
+   *
+   * @param $token
+   *   Authentication token.
+   * @param $format
+   *   API call response format.
+   * @param $parse
+   *   To parse response or not.
+   *
+   * @return
+   *   Authentication session
+   *
+   * @see http://api.themoviedb.org/2.1/methods/Auth.getSession
+   */
+  public function getAuthSession($token, $format = NULL, $parse = TRUE) {
+    $response = $this->call('Auth.getSession', $token, $format);
+    return ($parse) ? $this->parse($response) : $response;
+  }
 
 } // TMDbAPI class.
 
