@@ -533,7 +533,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function authGetSession($token, $format = NULL, $parse = TRUE) {
     $response = $this->call('Auth.getSession', $token, $format);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -555,7 +555,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function mediaAddID($params, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Media.addID', $params, $format, $language, TMDbCore::POST);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -579,7 +579,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function mediaGetInfo($hash, $bytesize, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Media.getInfo', $hash . '/' . $bytesize, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -602,7 +602,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function movieAddRating($params, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Movie.addRating', $params, $format, $language, TMDbCore::POST);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -645,7 +645,7 @@ class TMDbAPI extends TMDbCore {
     $params['order_by'] = $order_by;
     $response = $this->call('Movie.browse', $params, $format, $language);
 
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -667,7 +667,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function movieGetImages($mid, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Movie.getImages', $mid, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -689,7 +689,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function movieGetInfo($tmid, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Movie.getInfo', $tmid, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -709,7 +709,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function movieGetLatest($format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Movie.getLatest', NULL, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -731,7 +731,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function movieGetTranslations($mid, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Movie.getTranslations', $mid, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -753,7 +753,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function movieGetVersion($mids, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Movie.getVersion', $mids, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -775,7 +775,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function movieImdbLookup($imid, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Movie.imdbLookup', $imid, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -798,7 +798,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function movieSearch($title, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Movie.search', $title, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -821,7 +821,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function personGetInfo($pid, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Person.getInfo', $pid, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -841,7 +841,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function personGetLatest($format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Person.getLatest', NULL, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -863,7 +863,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function personGetVersion($pids, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Person.getVersion', $pids, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -885,7 +885,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function personSearch($name, $format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Person.search', $name, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
   /**
@@ -905,7 +905,7 @@ class TMDbAPI extends TMDbCore {
    */
   public function genresGetList($format = NULL, $language = NULL, $parse = TRUE) {
     $response = $this->call('Genres.getList', NULL, $format, $language);
-    return ($parse) ? $this->parse($response) : $response;
+    return ($parse) ? $this->parse($response, $format) : $response;
   }
 
 } // TMDbAPI class.
