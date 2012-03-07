@@ -49,8 +49,41 @@ function tmdb_menu() {
 }
 
 /**
- * API function: TMDb API wrapper.
+ * Main Wrapper function for instantiating a TMDbAPI object.
+ *
+ * @param $key
+ *   Optional TMDb API Key.
+ * @param $server
+ *   Optional TMDb API Server.
+ * @param $version
+ *   Optional TMDb API Version.
+ * @param $format
+ *   Optional TMDb API Response Format.
+ * @param $language
+ *   Optional TMDb API Response Language.
+ *
+ * @return
+ *   TMDbAPI object or FALSE on failure.
  */
-function tmdb() {
+function tmdb($key = FALSE, $server = FALSE, $version = FALSE, $format = FALSE, $language = FALSE) {
+  // Check for API key availablity:
+  if (!$key && !variable_get('tmdb_api_key', FALSE)) {
+    return FALSE;
+  }
 
+  // API key:
+  $key      = $key ? variable_get('tmdb_api_key', '') : $key;
+  // API response preferred format:
+  $format   = $format ? variable_get('tmdb_api_format', 'json') : $format;
+  // API server URL:
+  $server   = $server ? variable_get('tmdb_api_server', 'http://api.themoviedb.org/') : $server;
+  // API version:
+  $version  = $version ? variable_get('tmdb_api_version', '2.1') : $version;
+  // API response preferred language:
+  $language = $language ? variable_get('tmdb_api_language', 'en') : $language;
+
+  // Load TMDbPHP library:
+  module_load_include('api.inc', 'tmdb', 'tmdb');
+  // Instantiate and return the object:
+  return new TMDbAPI($key, $server, $version, $format, $language);
 }
