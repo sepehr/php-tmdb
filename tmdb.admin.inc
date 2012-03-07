@@ -95,20 +95,91 @@ function tmdb_admin_api_settings_validate($form, &$form_state) {
 }
 
 /**
- * Page callback: TMDb admin API testing page.
+ * Form callback: TMDb admin API testing form.
  */
 function tmdb_admin_api_testing() {
+  $form = array();
+
   // Check if the API key is set:
   if (variable_get('tmdb_api_key', FALSE)) {
-    // TODO: Test API
-    return 'API KEY SET, TEST API!';
+    // API usage example:
+    $TMDb = tmdb();
+    $response = $TMDb->movieGetLatest();
+
+    if ($response) {
+      // Get latest movie's image:
+      $image = $TMDb->movieGetImages($response[0]['id']);
+      // Table header/rows setup:
+      // These are not translatable for no damn reason!
+      $header = array_map('check_plain', array_keys($response[0]));
+      $rows   = array_map('check_plain', array_values($response[0]));
+      // Add cover image?
+      if (isset($image[0]['posters'][0]['image']['url'])) {
+        array_unshift($header, 'cover');
+        array_unshift($rows, theme('image', $image[0]['posters'][0]['image']['url'], '', '', NULL, FALSE));
+      }
+
+      // TMDb API test title:
+      $form['tmdb_test_title'] = array(
+        '#type'  => 'markup',
+        '#value' => '<h3>' . t('TMDb Latest Movie') . '</h3>' .
+          '<code>' .
+            variable_get('tmdb_api_server', 'http://api.themoviedb.org/') .
+            variable_get('tmdb_api_version', '2.1') . '/Movie.getLatest/' .
+            variable_get('tmdb_api_language', 'en') . '/' .
+            variable_get('tmdb_api_format', 'json') . '/' .
+            variable_get('tmdb_api_key', 'ERRR_NO_API_KEY') .
+          '</code>',
+      );
+      // API themed response:
+      $form['themed'] = array(
+        '#type'        => 'fieldset',
+        '#title'       => t('Response'),
+        '#collapsible' => TRUE,
+      );
+      $form['themed']['tmdb_test_themed_response'] = array(
+        '#type'  => 'markup',
+        '#value' => '<div class="tmdb-api-test">' .
+          theme('table', $header, array($rows)) .
+        '</div>',
+      );
+
+      // API raw response:
+      $form['raw'] = array(
+        '#type'        => 'fieldset',
+        '#title'       => t('Raw Response'),
+        '#collapsible' => TRUE,
+        '#collapsed'   => TRUE,
+      );
+      $form['raw']['tmdb_test_raw_response'] = array(
+        '#type'  => 'markup',
+        '#value' => '<pre><strong><code>' .
+          "\n========= movieGetLatest():\n" .
+          var_export($response, TRUE) .
+          "\n========= movieGetImages():\n" .
+          var_export($image, TRUE) .
+        '</code></strong></pre>',
+      );
+    }
+    // API key is set, but we got no response:
+    else {
+      drupal_set_message(t('There might be some remote problems with TMDb API server, please check back later.'), 'warning');
+    }
   }
+
   // API key is not set:
   else {
-    return t('To test the API you need to set your API key at !settings first.', array(
-      '!settings' => l(t('settings page'), 'admin/settings/tmdb'),
-    ));
+    $form['tmdb_test_failure'] = array(
+      '#type'  => 'markup',
+      '#value' => t('To test the API you need to set your API key at !settings first.', array(
+        '!settings' => l(t('settings page'), 'admin/settings/tmdb'),
+      )),
+    );
+    // Notify user:
+    drupal_set_message(t('TMDb API test failed. Have you set your API key?'), 'error');
   }
+
+  return $form;
 }
 
 /**
