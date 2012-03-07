@@ -20,21 +20,19 @@ function tmdb_perm() {
  */
 function tmdb_menu() {
   $items = array();
+
   // Configuration page:
-  $items['admin/settings/tmdb'] = array(
-    'title'            => 'TMDb API',
-    'description'      => 'Configuration settings for themoviedb.org API.',
-    'access arguments' => array('administer TMDb configuration'),
-  );
+  $items['admin/settings/tmdb'] =
   $items['admin/settings/tmdb/api'] = array(
     'title'            => 'TMDb API',
     'description'      => 'Configuration settings for themoviedb.org API.',
-    'page callback'    => 'drupal_get_form()',
+    'page callback'    => 'drupal_get_form',
     'page arguments'   => array('tmdb_admin_api_settings'),
     'access arguments' => array('administer TMDb configuration'),
-    'type'             => MENU_DEFAULT_LOCAL_TASK,
+    'type'             => MENU_CALLBCAK,
     'file'             => 'tmdb.admin.inc',
   );
+  $items['admin/settings/tmdb/api']['type'] = MENU_DEFAULT_LOCAL_TASK;
   // API test page:
   $items['admin/settings/tmdb/test'] = array(
     'title'            => 'TMDb API Test',
