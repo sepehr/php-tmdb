@@ -1,0 +1,149 @@
+<?php
+
+/**
+ * @file tmdb.api.test
+ * Contains TMDb module test cases.
+ */
+
+/**
+ * Simple tests base class for TMDb module.
+ */
+class TMDbTestCaseBase extends DrupalUnitTestCase {
+  // Test parameters.
+  protected $TMDbAPI;
+  protected $test_tmdb_id = 550;
+  protected $test_imdb_id = 'tt0137523';
+  protected $test_movie_title = 'The Fountain';
+  protected $test_media_hash = '907172e7fe51ba57';
+  protected $test_media_bytesize = '742086656';
+
+  /**
+   * Test initializer.
+   */
+  public function setUp() {
+    parent::setUp('tmdb');
+    $this->TMDbAPI = tmdb_api();
+  }
+}
+
+/**
+ * Main class for performing TMDb module tests.
+ */
+class TMDbAPITestCase extends TMDbTestCaseBase {
+
+  /**
+   * Return meta data about this test.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => t('TMDb API Functionality'),
+      'description' => t('Executes test suit for TMDb API functionality.'),
+      'group' => t('TMDb'),
+    );
+  }
+
+  /**
+   * Test method for TMDbAPI.getKey().
+   */
+  public function test_TMDbAPI_getKey() {
+    $result = $this->TMDbAPI->getKey();
+    $this->assertNotNull($result, 'API Key: ' . $result, 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.getServer().
+   */
+  public function test_TMDbAPI_getServer() {
+    $result = $this->TMDbAPI->getServer();
+    $this->assertNotNull($result, 'API Server: ' . $result, 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.getVersion().
+   */
+  public function test_TMDbAPI_getVersion() {
+    $result = $this->TMDbAPI->getVersion();
+    $this->assertNotNull($result, 'API Version: ' . $result, 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.getFormat().
+   */
+  public function test_TMDbAPI_getFormat() {
+    $result = $this->TMDbAPI->getFormat();
+    $this->assertNotNull($result, 'API Default Format: ' . $result, 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.getMediaInfo().
+   */
+  public function test_TMDbAPI_getMediaInfo() {
+    $result = $this->TMDbAPI->getMediaInfo($this->test_media_hash, $this->test_media_bytesize);
+    $this->assertNotNull($result, 'Found Media by its Hash & Bytesize: ' . $result[0]['name'], 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.browseMovie().
+   */
+  public function test_TMDbAPI_browseMovie() {
+    $result = $this->TMDbAPI->browseMovie('title', 'asc', array('page' => 1, 'per_page' => 5));
+    $this->assertNotNull($result, 'Fetched ' . count($result) . ' movie entries.', 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.getMovieImages().
+   */
+  public function test_TMDbAPI_getMovieImages() {
+    $result = $this->TMDbAPI->getMovieImages($this->test_tmdb_id);
+    $this->assertNotNull($result, 'Movie image URL: ' . $result[0]['posters'][0]['image']['url'], 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.getMovieInfo().
+   */
+  public function test_TMDbAPI_getMovieInfo() {
+    $result = $this->TMDbAPI->getMovieInfo($this->test_tmdb_id);
+    $this->assertNotNull($result, 'Found Movie by TMDb ID: ' . $result[0]['name'], 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.getLatestMovie().
+   */
+  public function test_TMDbAPI_getLatestMovie() {
+    $result = $this->TMDbAPI->getLatestMovie();
+    $this->assertNotNull($result, 'Latest Movie added to TMDb: ' . $result[0]['name'], 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.getMovieTranslations().
+   */
+  public function test_TMDbAPI_getMovieTranslations() {
+    $result = $this->TMDbAPI->getMovieTranslations($this->test_tmdb_id);
+    $this->assertNotNull($result, 'There were ' . count($result) . ' translations for #' . $this->test_tmdb_id, 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.getMovieVersion().
+   */
+  public function test_TMDbAPI_getMovieVersion() {
+    $result = $this->TMDbAPI->getMovieVersion($this->test_tmdb_id . ',' . $this->test_imdb_id);
+    $this->assertNotNull($result, 'Found ' . count($result) . ' versions for #' . $this->test_tmdb_id . ' & #' . $this->test_imdb_id, 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.imdbMovieLookup().
+   */
+  public function test_TMDbAPI_imdbMovieLookup() {
+    $result = $this->TMDbAPI->imdbMovieLookup($this->test_imdb_id);
+    $this->assertNotNull($result, 'Found the movie "' . $result[0]['name'] . '" via IMDb Lookup.', 'TMDbAPI Class Functionality');
+  }
+
+  /**
+   * Test method for TMDbAPI.searchMovie().
+   */
+  public function test_TMDbAPI_searchMovie() {
+    $result = $this->TMDbAPI->searchMovie($this->test_movie_title);
+    $this->assertNotNull($result, 'Found ' . count($result) . ' results for "' . $this->test_movie_title . '" query.', 'TMDbAPI Class Functionality');
+  }
+
+}
