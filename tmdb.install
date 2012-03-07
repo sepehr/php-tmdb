@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file tmdb.install
+ * Contains required installation hooks.
+ */
+
+/**
+ * Implements hook_enable().
+ */
+function tmdb_enable() {
+  drupal_set_message(st('TMDb API wrapper module has been installed. Please set your API Key in the !link.',
+    array('!link' => l(st('configuration page'), 'admin/settings/tmdb'))
+  ));
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function tmdb_uninstall() {
+  variable_del('tmdb_api_key');
+  variable_del('tmdb_api_version');
+  variable_del('tmdb_api_format');
+  variable_del('tmdb_api_server');
+  variable_del('tmdb_api_language');
+}
