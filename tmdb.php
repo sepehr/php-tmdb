@@ -28,3 +28,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+/**
+ * TMDb class is the API wrapper, you know!
+ * 
+ * ADD CLASS DESCRIPTION HERE.
+ * 
+ * Example usage:
+ * ADD EXAMPLE USAGE CODE HERE.
+ * 
+ * @see http://api.themoviedb.org
+ */
+class TMDb {
+
+}
+
+/**
+ * The Exception class for TMDb specific exceptions.
+ * 
+ * Defining to be compatible with Drupal coding 
+ * standards. We might extend this class per need.
+ */
+class TMDbException extends Exception{}
