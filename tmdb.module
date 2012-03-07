@@ -24,7 +24,7 @@ function tmdb_menu() {
   // Configuration page:
   $items['admin/settings/tmdb'] =
   $items['admin/settings/tmdb/api'] = array(
-    'title'            => 'TMDb API',
+    'title'            => 'TMDb Settings',
     'description'      => 'Configuration settings for themoviedb.org API.',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('tmdb_admin_api_settings'),
@@ -35,8 +35,7 @@ function tmdb_menu() {
   $items['admin/settings/tmdb/api']['type'] = MENU_DEFAULT_LOCAL_TASK;
   // API test page:
   $items['admin/settings/tmdb/test'] = array(
-    'title'            => 'TMDb API Test',
-    'description'      => 'TMDb API testing.',
+    'title'            => 'API Test',
     'page callback'    => 'tmdb_admin_api_testing',
     'access arguments' => array('administer TMDb configuration'),
     'type'             => MENU_LOCAL_TASK,
