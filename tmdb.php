@@ -30,7 +30,7 @@
  */
 
 /**
- * TMDb class is the API wrapper, you know!
+ * TMDb base class which contains the functionalities required to interact with API.
  *
  * ADD CLASS DESCRIPTION HERE.
  *
@@ -425,7 +425,39 @@ class TMDb {
   }
 } // TMDb class.
 
+/**
+ * TMDb main API wrapper class extending the base one (TMDb).
+ *
+ * ADD CLASS DESCRIPTION HERE.
+ *
+ * Example usage:
+ * ADD EXAMPLE USAGE CODE HERE.
+ *
+ * @see http://api.themoviedb.org
+ * @todo Review the code, it's for about a year ago, blah bla.
+ */
+class TMDbAPI extends TMDb {
 
+  /**
+   * TMDbAPI constructor.
+   *
+   * @param $key
+   *   API key.
+   * @param $server
+   *   API server address.
+   * @param $version
+   *   API version.
+   * @param $format
+   *   API call response format.
+   * @param $language
+   *   API call response language.
+   */
+  public function __construct($key, $server = TMDb::SERVER, $version = TMDb::VERSION, $format = TMDb::JSON, $language = TMDb::LANG) {
+    parent::__construct($key, $server, $version, $format, $language);
+  }
+
+
+} // TMDbAPI class.
 
 /**
  * The Exception class for TMDb specific exceptions.
