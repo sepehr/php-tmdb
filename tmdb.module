@@ -31,6 +31,7 @@ function tmdb_menu() {
     'access arguments' => array('administer TMDb configuration'),
     'type'             => MENU_CALLBCAK,
     'file'             => 'tmdb.admin.inc',
+    'weight'           => 1,
   );
   $items['admin/settings/tmdb/api']['type'] = MENU_DEFAULT_LOCAL_TASK;
   // API test page:
@@ -40,6 +41,7 @@ function tmdb_menu() {
     'access arguments' => array('administer TMDb configuration'),
     'type'             => MENU_LOCAL_TASK,
     'file'             => 'tmdb.admin.inc',
+    'weight'           => 2,
   );
 
   return $items;
