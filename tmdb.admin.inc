@@ -85,7 +85,7 @@ function tmdb_admin_api_settings_validate($form, &$form_state) {
 
   // Validates API format:
   if ($form_state['values']['tmdb_api_format'] == 'yaml' && !_tmdb_yaml_support()) {
-    form_set_error('tmdb_api_format', t('There are no YAML parser available. Please choose JSON or XML instead.'));
+    form_set_error('tmdb_api_format', t('There are no YAML parsers available. Please choose JSON or XML instead.'));
   }
 
   // Fix API server trailing slash:
