@@ -110,3 +110,13 @@ function tmdb_admin_api_testing() {
     ));
   }
 }
+
+/**
+ * Internal helper: Determines PHP YAML support.
+ *
+ * @return
+ *   TRUE or FALSE.
+ */
+function _tmdb_yaml_support() {
+  return (function_exists('yaml_parse') || function_exists('syck_load') || class_exists('Spyc'));
+}
