@@ -38,6 +38,7 @@
  * ADD EXAMPLE USAGE CODE HERE.
  *
  * @see http://api.themoviedb.org
+ * @todo Review the code, it's for about a year ago, blah bla.
  */
 class TMDb {
   // API call default params:
