@@ -1,0 +1,4 @@
+name = TMDb API
+description = Provides an API wrapper and interface for communicating with TMDb - http://themoviedb.org/
+core = 6.x
+package = TMDb
