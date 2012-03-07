@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file tmdb.module
+ * Contains required installation hooks.
+ *
+ * @todo
+ * - Implement hook_help().
+ */
+
+/**
+ * Implements hook_perm().
+ */
+function tmdb_perm() {
+
+}
+
+/**
+ * Implements hook_menu().
+ */
+function tmdb_menu() {
+
+}
+
+/**
+ * API function: TMDb API wrapper.
+ */
+function tmdb() {
+
+}
