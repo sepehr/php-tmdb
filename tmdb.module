@@ -71,15 +71,10 @@ function tmdb($key = FALSE, $server = FALSE, $version = FALSE, $format = FALSE, 
     return FALSE;
   }
 
-  // API key:
   $key      = $key ? variable_get('tmdb_api_key', '') : $key;
-  // API response preferred format:
   $format   = $format ? variable_get('tmdb_api_format', 'json') : $format;
-  // API server URL:
   $server   = $server ? variable_get('tmdb_api_server', 'http://api.themoviedb.org/') : $server;
-  // API version:
   $version  = $version ? variable_get('tmdb_api_version', '2.1') : $version;
-  // API response preferred language:
   $language = $language ? variable_get('tmdb_api_language', 'en') : $language;
 
   // Load TMDbPHP library:
