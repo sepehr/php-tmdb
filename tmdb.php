@@ -50,11 +50,11 @@
  *       parent::__construct($key, $server, $version, $format, $language);
  *     }
  *
- *    public function movieBrowse($params, $format = TMDbCore::JSON, $language = TMDbCore::LANG) {
- *      if (is_ok_blah($params)) {
+ *    public function fooBarMovieBrowse($params, $format = TMDbCore::JSON, $language = TMDbCore::LANG) {
+ *      if (is_ok_bla($params)) {
  *        return $this->parse($this->call('Movie.browse'), $params, $format, $language);
- *      } // if
- *    } // movieBrowse()
+ *      }
+ *    }
  *   } // TMDbFooWrapper class
  * </code>
  *
@@ -453,10 +453,16 @@ class TMDbCore {
 /**
  * TMDb main API wrapper class extending the base one (TMDbCore).
  *
- * ADD CLASS DESCRIPTION HERE.
+ * TMDbAPI method names are identical to TMDb remote method names,
+ * they're just camelCased. For example if you want to call TMDb's
+ * "Auth.getToken" remote method, you should use "authGetToken"
+ * local method.
  *
  * Example usage:
- * ADD EXAMPLE USAGE CODE HERE.
+ * <code>
+ *   $TMDb = new TMDbAPI('TMDB_API_KEY_HERE');
+ *   $images = $TMDb->movieGetImages($tmid);
+ * </code>
  *
  * @see http://api.themoviedb.org
  * @todo Review the code, it's for about a year ago, blah bla.
@@ -644,7 +650,7 @@ class TMDbAPI extends TMDbCore {
    *   To parse response or not.
    *
    * @return
-   *   Authentication session.
+   *   Movie images.
    *
    * @see http://api.themoviedb.org/2.1/methods/Movie.getImages
    */
@@ -666,7 +672,7 @@ class TMDbAPI extends TMDbCore {
    *   To parse response or not.
    *
    * @return
-   *   Authentication session.
+   *   Movie info.
    *
    * @see http://api.themoviedb.org/2.1/methods/Movie.getInfo
    */
@@ -730,7 +736,7 @@ class TMDbAPI extends TMDbCore {
    *   To parse response or not.
    *
    * @return
-   *   Last modified time along with the current version number.
+   *   Last modified time alongside the current version number.
    *
    * @see http://api.themoviedb.org/2.1/methods/Movie.getVersion
    */
@@ -840,7 +846,7 @@ class TMDbAPI extends TMDbCore {
    *   To parse response or not.
    *
    * @return
-   *    Last modified time along with the current version number.
+   *    Last modified time alongside the current version number.
    *
    * @see http://api.themoviedb.org/2.1/methods/Person.getVersion
    */
