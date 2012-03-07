@@ -19,7 +19,32 @@ function tmdb_perm() {
  * Implements hook_menu().
  */
 function tmdb_menu() {
+  $items = array();
+  // Configuration page:
+  $items['admin/settings/tmdb'] = array(
+    'title' => 'TMDb API',
+    'description' => 'Configuration settings for themoviedb.org API.',
+    'access arguments' => array('administer TMDb configuration'),
+  );
+  $items['admin/settings/tmdb/api'] = array(
+    'title' => 'TMDb API',
+    'description' => 'Configuration settings for themoviedb.org API.',
+    'page callback' => 'tmdb_admin_api_settings',
+    'access arguments' => array('administer TMDb configuration'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'file' => 'tmdb.admin.inc',
+  );
+  // API test page:
+  $items['admin/settings/tmdb/test'] = array(
+    'title' => 'TMDb API Test',
+    'description' => 'TMDb API testing.',
+    'page callback' => 'tmdb_admin_api_testing',
+    'access arguments' => array('administer TMDb configuration'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'tmdb.admin.inc',
+  );
 
+  return $items;
 }
 
 /**
